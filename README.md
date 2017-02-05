@@ -1,4 +1,4 @@
-# Intstagram API
+# Instagram API
 
 Useful php scripts for Instagram
 
@@ -6,9 +6,14 @@ Useful php scripts for Instagram
 
 * Docker Compose
 
+## Fill your Instagram user and password
+```
+vi src/script/accounts.php
+```
+
 ## How to run
 ```
-dcocker-compose up -d --bulil
+dcocker-compose up -d --build
 ```
 
 ## How to run scripts
