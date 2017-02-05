@@ -37,7 +37,7 @@ try {
             $mediaId = $item->getMediaId();
             $userId = $item->getUserNameId();
             //$user = $item->getUserName();
-            echo "id = " . $mediaId . " by " . $userId . " \n";
+            echo "[".$cnt."]id = " . $mediaId . " by " . $userId . " \n";
             $inst->like($mediaId);
             sleep(5);
             $inst->follow($userId);
