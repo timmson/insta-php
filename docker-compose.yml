@@ -5,3 +5,5 @@ services:
        context: .
      container_name: instagram-api
      restart: always
+     ports:
+       - "8000:80"
