@@ -1,0 +1,7 @@
+version: '2'
+services:
+   instagram-api:
+     build:
+       context: .
+     container_name: instagram-api
+     restart: always
