@@ -21,6 +21,8 @@ try {
 
     $hashTag = $argv[1];
 
+    $cnt = 0;
+
     do {
         if (is_null($helper)) {
             $helper = $inst->getHashtagFeed($hashTag);
@@ -42,9 +44,10 @@ try {
             sleep(5);
         }
 
-        echo "Next round [" . $helper->getNextMaxId() . "] \n";
+        $cnt++;
+        //echo "Next round [" . $helper->getNextMaxId() . "] \n";
 
-    } while (!is_null($helper->getNextMaxId()));
+    } while (!is_null($helper->getNextMaxId()) && $cnt < 100);
 
 } catch (Exception $e) {
     echo $e->getMessage();
