@@ -1,4 +1,4 @@
-FROM php:7.0-cli
+FROM php:7.0-apache
 MAINTAINER Krotov Artem <timmson666@mail.ru>
 
 RUN apt-get update && apt-get install -y \
@@ -23,6 +23,3 @@ COPY ./src/ ./
 
 # Install dependencies with Composer.
 RUN composer install --prefer-source --no-interaction
-
-ENTRYPOINT ["/bin/bash"]
-
