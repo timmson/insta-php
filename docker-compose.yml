@@ -3,7 +3,8 @@ services:
    instagram-api:
      build:
        context: .
-     container_name: instagram-api
+     image: instagram-api
+     container_name: php-instagram-server
      restart: always
      ports:
        - "8000:80"
