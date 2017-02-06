@@ -1,4 +1,6 @@
 FROM php:7.0-cli
+MAINTAINER Krotov Artem <timmson666@mail.ru>
+
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
@@ -21,4 +23,6 @@ COPY ./src/ ./
 
 # Install dependencies with Composer.
 RUN composer install --prefer-source --no-interaction
+
+CMD ["/bin/bash"]
 
