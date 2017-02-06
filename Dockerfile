@@ -24,5 +24,5 @@ COPY ./src/ ./
 # Install dependencies with Composer.
 RUN composer install --prefer-source --no-interaction
 
-CMD ["/bin/bash"]
+ENTRYPOINT ["/bin/bash"]
 
