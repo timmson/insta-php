@@ -5,9 +5,10 @@ services:
        context: .
      container_name: instagram-api
      restart: always
-     networks:
-       default:
-         external:
-           name: mynet
      ports:
        - "8000:80"
+
+networks:
+ default:
+   external:
+     name: mynet
