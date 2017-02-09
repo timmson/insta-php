@@ -21,7 +21,7 @@ try {
 
     $hashTag = $argv[1];
 
-    $limit = 50;
+    $limit = 20;
 
     $cnt = 0;
 
@@ -39,7 +39,7 @@ try {
             $mediaId = $item->getMediaId();
             $userId = $item->getUserNameId();
             //$user = $item->getUserName();
-            echo "[".$cnt."]id = " . $mediaId . " by " . $userId . " \n";
+            echo "[".$cnt."]: id = " . $mediaId . " by " . $userId . " \n";
             $inst->like($mediaId);
             sleep(5);
             $inst->follow($userId);
