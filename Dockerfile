@@ -31,4 +31,4 @@ COPY crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab && mkdir /app
 
 # Run the command on container startup
-CMD cron
+CMD cron && tail -f /app/log
