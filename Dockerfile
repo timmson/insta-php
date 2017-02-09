@@ -25,10 +25,10 @@ COPY ./src/ ./
 RUN composer install --prefer-source --no-interaction
 
 # Add crontab file in the cron directory
-ADD crontab /var/spool/cron/crontabs/root
+ADD hello-cron /etc/cron.d/hello-cron
 
 # Give execution rights on the cron job
-RUN chmod 0755 /var/spool/cron/crontabs/root && mkdir /app && touch /app/log
+RUN crontab /etc/cron.d/hello-cron && mkdir /app && touch /app/log
 
 # Run the command on container startup
 CMD ["cron", "-f"]
