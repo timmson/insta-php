@@ -49,7 +49,7 @@ try {
         $cnt++;
         //echo "Next round [" . $helper->getNextMaxId() . "] \n";
 
-    } while (!is_null($helper->getNextMaxId()) || $cnt < $limit);
+    } while ($cnt < $limit);
 
 } catch (Exception $e) {
     echo $e->getMessage();
