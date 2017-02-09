@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 include __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../vendor/mgp25/instagram-php/src/Instagram.php';
