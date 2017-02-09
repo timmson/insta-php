@@ -21,6 +21,8 @@ try {
 
     $hashTag = $argv[1];
 
+    $limit = 50;
+
     $cnt = 0;
 
     do {
@@ -47,7 +49,7 @@ try {
         $cnt++;
         //echo "Next round [" . $helper->getNextMaxId() . "] \n";
 
-    } while (!is_null($helper->getNextMaxId()) && $cnt < 50);
+    } while (!is_null($helper->getNextMaxId()) || $cnt < $limit);
 
 } catch (Exception $e) {
     echo $e->getMessage();

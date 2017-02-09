@@ -1,4 +1,4 @@
-FROM php:7.0-apache
+FROM php:7.0-cli
 MAINTAINER Krotov Artem <timmson666@mail.ru>
 
 RUN apt-get update && apt-get install -y \
@@ -23,3 +23,12 @@ COPY ./src/ ./
 
 # Install dependencies with Composer.
 RUN composer install --prefer-source --no-interaction
+
+# Add crontab file in the cron directory
+COPY crontab /etc/cron.d/crontab
+
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/crontab && touch /var/log/cron.log
+
+# Run the command on container startup
+CMD cron && tail -f /var/log/cron.log
