@@ -4,7 +4,7 @@ include __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../vendor/mgp25/instagram-php/src/Instagram.php';
 
 //Username and password
-include "account.php";
+include __DIR__ ."/account.php";
 
 $debug = false;
 
