@@ -16,9 +16,6 @@ RUN apt-get update && apt-get install -y \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && ln -fs /var/www/html /app
 
-# Add task-cron file in the cron directory
-ADD task-cron /etc/cron.d/task-cron
-
 # Set the WORKDIR to /app so all following commands run in /app
 WORKDIR /app
 
@@ -26,7 +23,7 @@ WORKDIR /app
 COPY ./src/ ./
 
 # Install dependencies with Composer.
-RUN composer install --prefer-source --no-interaction && crontab /etc/cron.d/task-cron
+RUN composer install --prefer-source --no-interaction && crontab task-cron
 
 # Run the command on container startup
 CMD ["cron", "-f"]
