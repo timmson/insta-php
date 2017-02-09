@@ -6,8 +6,6 @@ services:
      image: instagram-api
      container_name: php-instagram-server
      restart: always
-     ports:
-       - "8000:80"
 
 networks:
  default:
