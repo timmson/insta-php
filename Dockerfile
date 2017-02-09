@@ -25,7 +25,7 @@ COPY ./src/ ./
 RUN composer install --prefer-source --no-interaction
 
 # Add crontab file in the cron directory
-ADD crontab /etc/cron.d/crontab
+ADD crontab /var/spool/cron/crontabs/root
 
 # Give execution rights on the cron job
 RUN chmod 0755 /etc/cron.d/crontab && mkdir /app && touch /app/log
