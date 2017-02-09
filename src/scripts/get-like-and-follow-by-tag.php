@@ -44,9 +44,9 @@ try {
             sleep(5);
             $inst->follow($userId);
             sleep(5);
+            $cnt++;
         }
 
-        $cnt++;
         //echo "Next round [" . $helper->getNextMaxId() . "] \n";
 
     } while ($cnt < $limit);
