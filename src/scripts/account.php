@@ -8,7 +8,7 @@ $amqp = array(
     "user" => "",
     "password" => "",
     "exchange" => "",
-    "queue"
+    "queue" => ""
 );
 
 ?>
