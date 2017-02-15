@@ -11,4 +11,9 @@ $amqp = array(
     "queue" => ""
 );
 
+$to = array(
+    "id" => "",
+    "username" => ""
+);
+
 ?>
