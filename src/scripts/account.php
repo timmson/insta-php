@@ -1,6 +1,6 @@
 <?php
-$username = "";
-$password = "";
+$username = "alisa_a_k";
+$password = "YXiOqT9Pi1m82wwveFWD";
 
 $amqp = array(
     "host" => "",
