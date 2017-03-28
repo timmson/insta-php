@@ -32,9 +32,10 @@ try {
 
     $items = $helper->getItems(); //$helper->getRankedItems();
     for ($i = 0; $i < 10; $i++) {
+        $profileUrl = "https://instagram.com/".$items[$i]->getUser()->getUserName()."/";
         foreach ($items[$i]->getImageVersions() as $imageVersion) {
             if ($imageVersion->getWidth() == '1080') {
-                $msg = getMessage($to, $imageVersion->getUrl());
+                $msg = getMessage($to, $imageVersion->getUrl(), $profileUrl);
                 $channel->basic_publish($msg, $amqp['exchange']);
             }
         }
@@ -49,15 +50,15 @@ try {
 
 $inst->logout();
 
-function getMessage($to, $url)
+function getMessage($to, $imageUrl, $profileUrl)
 {
     $message = array(
         "to" => $to,
         "version" => 2,
         "type" => 'image_link',
         "text" => "Memes",
-        "image" => $url,
-        "url" => $url
+        "image" => $imageUrl,
+        "url" => $profileUrl
     );
 
     $data = json_encode($message);
