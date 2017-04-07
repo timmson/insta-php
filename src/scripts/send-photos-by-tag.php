@@ -33,7 +33,7 @@ try {
     $items = $helper->getItems(); //$helper->getRankedItems();
     $i = 0;
     $j = 0;
-    while ($i < count($items) && $j < 3) {
+    while ($i < count($items) && $j < 5) {
         if ($items[$i]->isPhoto()) {
             $maxWidth = 0;
             $maxWidthUrl = '';
