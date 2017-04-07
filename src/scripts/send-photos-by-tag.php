@@ -2,7 +2,6 @@
 include __DIR__ . '/../vendor/autoload.php';
 
 use InstagramAPI\Instagram;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 //Username and password
@@ -31,14 +30,25 @@ try {
     $helper = $inst->getHashtagFeed($hashTag);
 
     $items = $helper->getItems(); //$helper->getRankedItems();
-    for ($i = 0; $i < 10; $i++) {
-        $profileUrl = "https://instagram.com/".$items[$i]->getUser()->getUserName()."/";
-        foreach ($items[$i]->getImageVersions() as $imageVersion) {
-            if ($imageVersion->getWidth() == '1080') {
-                $msg = getMessage($to, $imageVersion->getUrl(), $profileUrl);
-                $channel->basic_publish($msg, $amqp['exchange']);
+    $i = 0;
+    $j = 0;
+    while ($i < count($items) && $j < 3) {
+        if ($items[$i]->isPhoto()) {
+            $maxWidth = 0;
+            $maxWidthUrl = '';
+            $imageVersions = $items[$i]->getImageVersions();
+            for ($k = 0; $k < count($imageVersions); $k++) {
+                if ($imageVersions[$k]->getWidth() > $maxWidth) {
+                    $maxWidth = $imageVersions[$k]->getWidth();
+                    $maxWidthUrl = $imageVersions[$k]->getUrl();
+                }
             }
+            $msg = getMessage($to, $maxWidthUrl, "https://instagram.com/" . $items[$i]->getUser()->getUserName() . "/");
+            $channel->basic_publish($msg, $amqp['exchange']);
+            $j++;
+
         }
+        $i++;
     }
 
     $channel->close();
