@@ -2,6 +2,7 @@
 include __DIR__ . '/../vendor/autoload.php';
 
 use InstagramAPI\Instagram;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 //Username and password
