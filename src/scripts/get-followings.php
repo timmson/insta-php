@@ -7,7 +7,7 @@ include "account.php";
 
 $debug = false;
 
-$inst = new \InstagramAPI\Instagram($username, $password,$debug);
+$inst = new \InstagramAPI\Instagram($username, $password, $debug);
 
 try {
     $inst->login();
@@ -21,42 +21,23 @@ try {
 
     $i = 0;
 
-    //include 'shlak.php';
-    //echo count($shlak);
 
+    $followingCount = $inst->getSelfUsernameInfo()->getFollowingCount();
 
-   do {
-        if (is_null($helper)) {
-            $helper = $inst->getSelfUsersFollowing();
-        } else {
-            $helper = $inst->getSelfUsersFollowing($helper->getNextMaxId());
-        }
+    print_r("Following count = ".$followingCount);
 
+    if ($followingCount > 172/*magic number*/) {
+
+        $helper = $inst->getSelfUsersFollowing();
 
         foreach ($helper->getFollowings() as $following) {
+            $userId = $following->getUsernameId();
+            echo $following->getUsername() . " " . $userId . "\n";
+            $inst->unfollow($userId);
             sleep(2);
-	    if (!in_array($following->getUsername(), $shlak, true)) {
-                $userId = $following->getUsernameId();
-                echo ($i++) . '- ' . $following->getUsername() . " " . $userId . "\n";
-                $inst->unfollow($userId);
-            }
         }
+    }
 
-        /*        if (is_null($helper)) {
-                    $helper = $inst->getSelfUserFollowers();
-                } else {
-                    $helper = $inst->getSelfUserFollowers($helper->getNextMaxId());
-                }
-
-
-
-                foreach ($helper->getFollowers() as $following) {
-                    $userId = $following->getUsernameId();
-                    //echo ($i++).'- ' . $following->getUsername() . " " . $userId . "\n";
-                    echo '"'.$following->getUsername(). '", ' . "\n";
-                }*/
-
-   } while (!is_null($helper->getNextMaxId()));
 
 } catch (Exception $e) {
     echo $e->getMessage();
