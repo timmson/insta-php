@@ -31,25 +31,20 @@ try {
     $helper = $inst->getHashtagFeed($hashTag);
 
     $items = $helper->getItems(); //$helper->getRankedItems();
-    $i = 0;
-    $j = 0;
-    while ($i < count($items) && $j < 5) {
-        if ($items[$i]->isPhoto()) {
-            $maxWidth = 0;
-            $maxWidthUrl = '';
-            $imageVersions = $items[$i]->getImageVersions();
-            for ($k = 0; $k < count($imageVersions); $k++) {
-                if ($imageVersions[$k]->getWidth() > $maxWidth) {
-                    $maxWidth = $imageVersions[$k]->getWidth();
-                    $maxWidthUrl = $imageVersions[$k]->getUrl();
-                }
-            }
-            $msg = getMessage($to, $maxWidthUrl, "https://instagram.com/" . $items[$i]->getUser()->getUserName() . "/");
-            $channel->basic_publish($msg, $amqp['exchange']);
-            $j++;
 
+    for ($i = 0; $i < 5 && $i < count($items); $i++) {
+        $maxWidth = 0;
+        $maxWidthUrl = '';
+        $versions = $items[$i]->isPhoto() ? $items[$i]->getImageVersions() : $items[$i]->getVideoVersions();
+        for ($k = 0; $k < count($versions); $k++) {
+            if ($versions[$k]->getWidth() > $maxWidth) {
+                $maxWidth = $versions[$k]->getWidth();
+                $maxWidthUrl = $versions[$k]->getUrl();
+            }
         }
-        $i++;
+        $profileUrl = "https://instagram.com/" . $items[$i]->getUser()->getUserName() . "/";
+        $msg = $items[$i]->isPhoto() ? getPhotoMessage($to, $maxWidthUrl, $profileUrl) : getVideoMessage($to, $maxWidthUrl, $profileUrl);
+        $channel->basic_publish($msg, $amqp['exchange']);
     }
 
     $channel->close();
@@ -61,20 +56,31 @@ try {
 
 $inst->logout();
 
-function getMessage($to, $imageUrl, $profileUrl)
+function getPhotoMessage($to, $imageUrl, $profileUrl)
 {
-    $message = array(
+    $message = getMessage($to, $profileUrl);
+    $message['type'] = 'image_link';
+    $message['image'] = $imageUrl;
+    return new AMQPMessage(json_encode($message));
+}
+
+function getVideoMessage($to, $videoUrl, $profileUrl)
+{
+    $message = getMessage($to, $profileUrl);
+    $message['type'] = 'video_link';
+    $message['video'] = $videoUrl;
+    return new AMQPMessage(json_encode($message));
+}
+
+function getMessage($to, $profileUrl)
+{
+    return array(
         "to" => $to,
         "version" => 2,
         "type" => 'image_link',
         "text" => "Memes",
-        "image" => $imageUrl,
         "url" => $profileUrl
     );
-
-    $data = json_encode($message);
-
-    return new AMQPMessage($data);
 }
 
 ?>
